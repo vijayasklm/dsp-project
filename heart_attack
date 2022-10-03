@@ -1,0 +1,102 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+dataset=pd.read_csv(r"C:\Users\VIZ\Downloads\heart.csv")
+dataset
+dataset.head()
+dataset.isnull().sum()
+dataset.dtypes
+dataset.describe()
+dataset.info()
+dataset=dataset.drop_duplicates()
+dataset.shape
+dataset.size
+import seaborn as sns
+plt.figure(figsize=(10, 8))
+sns.scatterplot(y='age', x='sex', hue='target', data=dataset)
+plt.title("Heart Attack Dataset")
+plt.ylabel("age")
+plt.xlabel("sex")
+plt.show()
+import seaborn as sns
+plt.figure(figsize=(10, 8))
+sns.scatterplot(x='trestbps', y='thalach', hue='target', data=dataset)
+plt.title("Heart Attack Dataset")
+plt.xlabel("trestbps")
+plt.ylabel("thalach")
+plt.show()
+import seaborn as sns
+plt.figure(figsize=(10, 8))
+sns.scatterplot(x='age', y='thalach', hue='target', data=dataset)
+plt.title("Heart Attack Dataset")
+plt.xlabel("age")
+plt.ylabel("thalach")
+plt.show()
+import seaborn as sns
+plt.figure(figsize=(10, 8))
+sns.scatterplot(x='chol', y='thalach', hue='target',  data=dataset)
+plt.title("Heart Attack Dataset")
+plt.xlabel("chol")
+plt.ylabel("thalach")
+plt.show()
+from sklearn.model_selection import train_test_split # split the data
+from sklearn import metrics
+X = dataset[['age', 'sex','cp','trestbps','chol']].values # fts
+y = dataset['target'].values # target
+X,y
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.25) # train- test split
+X_train,X_test,y_train,y_test
+from sklearn.linear_model import LogisticRegression 
+logistic_regression= LogisticRegression()
+logistic_regression.fit(X_train,y_train) 
+y_pred=logistic_regression.predict(X_test)
+y_pred
+df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
+df.head()
+logreg = LogisticRegression()  
+logreg.fit(X_train, y_train)  
+y_pred  = logreg.predict(X_test) 
+print("Accuracy={:.2f} ".format(logreg.score(X_test, y_test)))
+#calculating the error
+from sklearn import metrics  
+print('Mean Absolute Error:', 
+      metrics.mean_absolute_error(y_test, y_pred))
+  
+#y_test,y_pred values
+print(y_test, y_pred)
+
+# You can also test with your own data
+q=[[63,1,3,145,233]]
+own_pred =logistic_regression.predict(q)
+print("Predicted Score = {}".format(own_pred[0]))
+
+#Task#
+
+i=dataset.query('sex==1 and target==1')
+df=i.loc[i['age'].idxmax()]
+df
+df=i.loc[i['age'].idxmin()]
+df
+
+i=dataset.query("sex==0 and target==1")
+df=i.loc[i['age'].idxmax()]
+df
+df=i.loc[i['age'].idxmin()]
+df
+df=i.loc[i['chol'].idxmax()]
+df
+df=i.loc[i['age'].idxmin()]
+df
+i=dataset.query("sex==0 and target==1")
+df=i.loc[i["chol"].idxmax()]
+df
+df=i.loc[i['age'].idxmin()]
+df
+i=dataset.query('sex==1 and target==1')
+df=i.loc[i["chol"].idxmax()]
+df
+df=i.loc[i["chol"].idxmin()]
+df
